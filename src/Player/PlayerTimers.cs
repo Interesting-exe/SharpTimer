@@ -17,6 +17,7 @@ using System.Text.Json;
 using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Modules.Utils;
+using SharpTimerAPI.Events;
 
 namespace SharpTimer
 {
@@ -25,6 +26,7 @@ namespace SharpTimer
         public void OnTimerStart(CCSPlayerController? player, int bonusX = 0)
         {
             if (!IsAllowedPlayer(player)) return;
+            StEventSenderCapability.Get()?.TriggerEvent(new StartTimerEvent(player));
 
             if (bonusX != 0)
             {
@@ -69,6 +71,7 @@ namespace SharpTimer
             var currentTicks = playerTimer.TimerTicks;
 
             if (!IsAllowedPlayer(player) || playerTimer.IsTimerRunning == false) return;
+            StEventSenderCapability.Get()?.TriggerEvent(new StopTimerEvent(player));
 
             if (useStageTriggers == true && useCheckpointTriggers == true)
             {
@@ -112,6 +115,7 @@ namespace SharpTimer
             }
 
             if (useTriggers) SharpTimerDebug($"Stopping Timer for {playerName}");
+            StEventSenderCapability.Get()?.TriggerEvent(new FinishMapPlayerEvents(player));
 
             if (!ignoreJSON) SavePlayerTime(player, currentTicks);
             if (useMySQL == true) _ = Task.Run(async () => await SavePlayerTimeToDatabase(player, currentTicks, steamID, playerName, playerSlot));

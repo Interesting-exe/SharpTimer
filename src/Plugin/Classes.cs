@@ -17,6 +17,8 @@ using System.Text.Json.Serialization;
 using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Modules.Utils;
+using SharpTimerAPI;
+using SharpTimerAPI.Events;
 
 namespace SharpTimer
 {
@@ -262,5 +264,15 @@ namespace SharpTimer
         public Vector PushDirEntitySpace { get; set; } = pushDirEntitySpace;
         public Vector PushMins { get; set; } = pushMins;
         public Vector PushMaxs { get; set; } = pushMaxs;
+    }
+
+    public class SharpTimerEventSender : ISharpTimerEventSender
+    {
+        public void TriggerEvent(ISharpTimerPlayerEvent @event)
+        {
+            STEventSender?.Invoke(this, @event);
+        }
+
+        public event EventHandler<ISharpTimerPlayerEvent>? STEventSender;
     }
 }

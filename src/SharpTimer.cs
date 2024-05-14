@@ -16,17 +16,23 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Core.Attributes;
+using CounterStrikeSharp.API.Core.Capabilities;
 using CounterStrikeSharp.API.Modules.Cvars;
+using SharpTimerAPI;
 
 namespace SharpTimer
 {
     [MinimumApiVersion(228)]
     public partial class SharpTimer : BasePlugin
     {
+        public static PluginCapability<ISharpTimerEventSender> StEventSenderCapability { get; } = new("sharptimer:event_sender");
         public override void Load(bool hotReload)
         {
             SharpTimerConPrint("Loading Plugin...");
             CheckForUpdate();
+            
+            var sharpTimerEventSender = new SharpTimerEventSender();
+            Capabilities.RegisterPluginCapability(StEventSenderCapability, () => sharpTimerEventSender);
 
             defaultServerHostname = ConVar.Find("hostname")!.StringValue;
             Server.ExecuteCommand($"execifexists SharpTimer/config.cfg");
