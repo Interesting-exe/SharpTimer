@@ -1070,7 +1070,7 @@ namespace SharpTimer
             Server.NextFrame(() => RespawnPlayer(player, true));
         }
 
-        public void RespawnPlayer(CCSPlayerController? player, bool toEnd = false)
+        public static void RespawnPlayer(CCSPlayerController? player, bool toEnd = false)
         {
             try
             {
@@ -1099,7 +1099,6 @@ namespace SharpTimer
                         {
                             player.PlayerPawn.Value!.Teleport(currentRespawnPos, player.PlayerPawn.Value.EyeAngles ?? new QAngle(0, 0, 0), new Vector(0, 0, 0));
                         }
-                        SharpTimerDebug($"{player.PlayerName} css_r to {currentRespawnPos}");
                     }
                     else
                     {
@@ -1136,7 +1135,7 @@ namespace SharpTimer
             }
             catch (Exception ex)
             {
-                SharpTimerError($"Exception in RespawnPlayer: {ex.Message}");
+                Console.WriteLine($"Exception in RespawnPlayer: {ex.Message}");
             }
         }
 

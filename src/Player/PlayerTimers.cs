@@ -71,7 +71,6 @@ namespace SharpTimer
             var currentTicks = playerTimer.TimerTicks;
 
             if (!IsAllowedPlayer(player) || playerTimer.IsTimerRunning == false) return;
-            StEventSenderCapability.Get()?.TriggerEvent(new StopTimerEvent(player));
 
             if (useStageTriggers == true && useCheckpointTriggers == true)
             {
@@ -115,7 +114,7 @@ namespace SharpTimer
             }
 
             if (useTriggers) SharpTimerDebug($"Stopping Timer for {playerName}");
-            StEventSenderCapability.Get()?.TriggerEvent(new FinishMapPlayerEvents(player));
+            StEventSenderCapability.Get()?.TriggerEvent(new StopTimerEvent(player));
 
             if (!ignoreJSON) SavePlayerTime(player, currentTicks);
             if (useMySQL == true) _ = Task.Run(async () => await SavePlayerTimeToDatabase(player, currentTicks, steamID, playerName, playerSlot));

@@ -28,10 +28,10 @@ namespace SharpTimer
         public override string ModuleAuthor => "dea https://github.com/deafps/";
         public override string ModuleDescription => "A CS2 Timer Plugin";
 
-        private Dictionary<int, PlayerTimerInfo> playerTimers = [];
-        private Dictionary<int, PlayerJumpStats> playerJumpStats = [];
+        private static Dictionary<int, PlayerTimerInfo> playerTimers = [];
+        private static Dictionary<int, PlayerJumpStats> playerJumpStats = [];
         private Dictionary<int, PlayerReplays> playerReplays = [];
-        private Dictionary<int, List<PlayerCheckpoint>> playerCheckpoints = [];
+        private static Dictionary<int, List<PlayerCheckpoint>> playerCheckpoints = [];
         private Dictionary<int, CCSPlayerController> connectedPlayers = [];
         private Dictionary<int, CCSPlayerController> connectedReplayBots = [];
         private Dictionary<uint, CCSPlayerController> specTargets = [];
@@ -46,7 +46,7 @@ namespace SharpTimer
             PropertyNameCaseInsensitive = true
         };
 
-        public string msgPrefix = $" {ChatColors.Green}[SharpTimer]{ChatColors.White} ";
+        public static string msgPrefix = $" {ChatColors.Green}[SharpTimer]{ChatColors.White} ";
         public string primaryHUDcolor = "green";
         public string secondaryHUDcolor = "orange";
         public string tertiaryHUDcolor = "white";
@@ -63,9 +63,9 @@ namespace SharpTimer
         public Vector currentMapStartC2 = new(0, 0, 0);
         public Vector currentMapEndC1 = new(0, 0, 0);
         public Vector currentMapEndC2 = new(0, 0, 0);
-        public Vector? currentRespawnPos = null;
-        public QAngle? currentRespawnAng = null;
-        public Vector? currentEndPos = null;
+        public static Vector? currentRespawnPos = null;
+        public static QAngle? currentRespawnAng = null;
+        public static Vector? currentEndPos = null;
         public string[]? currentMapOverrideDisableTelehop = [];
         public string[]? currentMapOverrideMaxSpeedLimit = [];
         public bool currentMapOverrideStageRequirement = false;
@@ -76,14 +76,14 @@ namespace SharpTimer
         private Dictionary<nint, int> cpTriggers = [];
         private Dictionary<int, Vector?> stageTriggerPoses = [];
         private Dictionary<int, QAngle?> stageTriggerAngs = [];
-        private int stageTriggerCount;
-        private int cpTriggerCount;
+        private static int stageTriggerCount;
+        private static int cpTriggerCount;
         private bool useStageTriggers = false;
         private bool useCheckpointTriggers = false;
         public string? currentMapType = null;
         public int? currentMapTier = null;
 
-        public bool enableDebug = true;
+        public static bool enableDebug = true;
         public bool killServerCommands = true;
         public bool useMySQL = false;
         public bool ignoreJSON = false;
@@ -142,7 +142,7 @@ namespace SharpTimer
 
         public int bhopBlockTime = 64;
 
-        public bool jumpStatsEnabled = false;
+        public static bool jumpStatsEnabled = false;
         public float jumpStatsMinDist = 175;
         public float jumpStatsMaxVert = 32;
         public bool movementUnlockerCapEnabled = true;
@@ -151,7 +151,7 @@ namespace SharpTimer
         public bool execCustomMapCFG = false;
 
         public string beepSound = "sounds/ui/csgo_ui_button_rollover_large.vsnd";
-        public string respawnSound = "sounds/ui/menu_accept.vsnd";
+        public static string respawnSound = "sounds/ui/menu_accept.vsnd";
         public string cpSound = "sounds/ui/counter_beep.vsnd";
         public string cpSoundAir = "sounds/ui/weapon_cant_buy.vsnd";
         public string tpSound = "sounds/ui/buttonclick.vsnd";

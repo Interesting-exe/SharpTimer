@@ -369,7 +369,7 @@ namespace SharpTimer
             }
         }
 
-        public void InvalidateJS(int playerSlot)
+        public static void InvalidateJS(int playerSlot)
         {
             if (playerJumpStats.TryGetValue(playerSlot, out PlayerJumpStats? value))
             {

@@ -275,4 +275,12 @@ namespace SharpTimer
 
         public event EventHandler<ISharpTimerPlayerEvent>? STEventSender;
     }
+    
+    public class SharpTimerManager : ISharpTimerManager
+    {
+        public void RestartTimer(CCSPlayerController player)
+        {
+           SharpTimer.RespawnPlayer(player);
+        }
+    }
 }
