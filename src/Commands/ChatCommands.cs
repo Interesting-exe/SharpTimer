@@ -824,6 +824,12 @@ namespace SharpTimer
                     return;
                 }
 
+                if (playerTimers[player.Slot].RespawnCmdBlocked)
+                {
+                    player.PrintToChat($"{msgPrefix} You can't use !rb at the moment!");
+                    return;
+                }
+
                 playerTimers[player.Slot].TicksSinceLastCmd = 0;
 
                 if (!int.TryParse(command.ArgString, out int bonusX))
@@ -1037,6 +1043,12 @@ namespace SharpTimer
                 return;
             }
 
+            if (playerTimers[player.Slot].RespawnCmdBlocked)
+            {
+                player.PrintToChat(msgPrefix + " You can't use !r at the moment!");
+                return;
+            }
+
             playerTimers[player.Slot].TicksSinceLastCmd = 0;
 
             RespawnPlayer(player);
@@ -1058,6 +1070,12 @@ namespace SharpTimer
             if (playerTimers[player.Slot].IsReplaying)
             {
                 player.PrintToChat(msgPrefix + $" Please end your current replay first {primaryChatColor}!stopreplay");
+                return;
+            }
+            
+            if (playerTimers[player.Slot].RespawnCmdBlocked)
+            {
+                player.PrintToChat(msgPrefix + " You can't use !end the moment!");
                 return;
             }
 
@@ -1193,6 +1211,17 @@ namespace SharpTimer
         [CommandHelper(whoCanExecute: CommandUsage.CLIENT_ONLY)]
         public void ForceStopTimer(CCSPlayerController? player, CommandInfo command)
         {
+            if (player != null && playerTimers[player.Slot].TimerCmdBlocked)
+            {
+                player.PrintToChat($"{msgPrefix} You can't use !timer at the moment!");
+                return;
+            }
+
+            ForceStopTimer(player);
+        }
+
+        public void ForceStopTimer(CCSPlayerController? player)
+        {
             if (!IsAllowedPlayer(player)) return;
             SharpTimerDebug($"{player!.PlayerName} calling css_timer...");
 
@@ -1207,7 +1236,7 @@ namespace SharpTimer
                 player.PrintToChat(msgPrefix + $" Please end your current replay first {primaryChatColor}!stopreplay");
                 return;
             }
-
+            
             playerTimers[player.Slot].TicksSinceLastCmd = 0;
 
             // Remove checkpoints for the current player

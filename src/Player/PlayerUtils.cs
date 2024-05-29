@@ -395,7 +395,7 @@ namespace SharpTimer
                         return getRankImg ? god2Icon : (getPlacementOnly ? $"{placement}/{totalPlayers}" : $"God II");
                     else if (placement <= 3)
                         return getRankImg ? god1Icon : (getPlacementOnly ? $"{placement}/{totalPlayers}" : $"God I");
-                    else if (percentage <= 1)
+                    else if (percentage <= 2.0)
                         return getRankImg ? royalty3Icon : (getPlacementOnly ? $"{placement}/{totalPlayers}" : $"Royalty III");
                     else if (percentage <= 5.0)
                         return getRankImg ? royalty2Icon : (getPlacementOnly ? $"{placement}/{totalPlayers}" : $"Royalty II");
@@ -551,7 +551,7 @@ namespace SharpTimer
                 string originalPlayerName = player.PlayerName;
 
                 string stripedClanTag = RemovePlayerTags(player.Clan ?? "");
-
+                
                 player.Clan = $"{stripedClanTag}{(playerTimers[player.Slot].IsVip ? $"[{customVIPTag}]" : "")}[{tag}]";
 
                 player.PlayerName = originalPlayerName + " ";

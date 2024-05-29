@@ -30,7 +30,8 @@ namespace SharpTimer
         public override void Load(bool hotReload)
         {
             SharpTimerConPrint("Loading Plugin...");
-            CheckForUpdate();
+
+            Instance = this;
             
             var sharpTimerEventSender = new SharpTimerEventSender();
             Capabilities.RegisterPluginCapability(StEventSenderCapability, () => sharpTimerEventSender);

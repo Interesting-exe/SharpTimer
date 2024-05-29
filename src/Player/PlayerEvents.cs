@@ -65,6 +65,8 @@ namespace SharpTimer
                     playerTimers[playerSlot].IsRecordingReplay = false;
                     playerTimers[playerSlot].SetRespawnPos = null;
                     playerTimers[playerSlot].SetRespawnAng = null;
+                    playerTimers[playerSlot].RespawnCmdBlocked = false;
+                    playerTimers[playerSlot].TimerCmdBlocked = false;
 
                     if (isForBot == false) _ = Task.Run(async () => await IsPlayerATester(steamID, playerSlot));
 

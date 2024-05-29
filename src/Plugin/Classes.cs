@@ -16,6 +16,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using System.Text.Json.Serialization;
 using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
+using CounterStrikeSharp.API.Modules.Commands;
 using CounterStrikeSharp.API.Modules.Utils;
 using SharpTimerAPI;
 using SharpTimerAPI.Events;
@@ -163,6 +164,10 @@ namespace SharpTimer
         //set respawn
         public string? SetRespawnPos { get; set; }
         public string? SetRespawnAng { get; set; }
+        
+        //api stuff
+        public bool RespawnCmdBlocked { get; set; }
+        public bool TimerCmdBlocked { get; set; }
     }
 
     public class PlayerJumpStats
@@ -281,6 +286,26 @@ namespace SharpTimer
         public void RestartTimer(CCSPlayerController player)
         {
            SharpTimer.RespawnPlayer(player);
+        }
+
+        public bool IsTimerOn(CCSPlayerController player)
+        {
+            return !SharpTimer.playerTimers[player.Slot].IsTimerBlocked;
+        }
+
+        public void ToggleTimer(CCSPlayerController player)
+        {
+            SharpTimer.Instance.ForceStopTimer(player);
+        }
+
+        public void BlockTimerCmd(CCSPlayerController player, bool block)
+        {
+            SharpTimer.playerTimers[player.Slot].TimerCmdBlocked = block;
+        }
+
+        public void BlockRespawnCmd(CCSPlayerController player, bool block)
+        {
+            SharpTimer.playerTimers[player.Slot].RespawnCmdBlocked = block;
         }
     }
 }

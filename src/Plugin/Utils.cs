@@ -28,64 +28,6 @@ namespace SharpTimer
 {
     public partial class SharpTimer
     {
-        public async Task<(bool IsLatest, string LatestVersion)> IsLatestVersion()
-        {
-            try
-            {
-                string apiUrl = "https://api.github.com/repos/deafps/SharpTimer/releases/latest";
-                var request = new HttpRequestMessage(HttpMethod.Get, apiUrl);
-                request.Headers.Add("User-Agent", "request");
-
-                HttpResponseMessage response = await httpClient.SendAsync(request);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string json = await response.Content.ReadAsStringAsync();
-                    var options = jsonSerializerOptions;
-                    var releaseInfo = JsonSerializer.Deserialize<Dictionary<string, object>>(json, options);
-
-                    string latestVersion = releaseInfo!["name"].ToString()!;
-
-                    return (latestVersion! == ModuleVersion!, latestVersion!);
-                }
-                else
-                {
-                    SharpTimerError($"Failed to fetch data from GitHub API: {response.StatusCode}");
-                    return (false, "null");
-                }
-            }
-            catch (Exception ex)
-            {
-                SharpTimerError($"An error occurred in IsLatestVersion: {ex.Message}");
-                return (false, "null");
-            }
-        }
-
-        public async void CheckForUpdate()
-        {
-            try
-            {
-                (bool isLatest, string latestVersion) = await IsLatestVersion();
-
-                if (!isLatest && latestVersion != "null")
-                {
-                    for (int i = 0; i < 5; i++)
-                    {
-                        SharpTimerConPrint($"\u001b[33m----------------------------------------------------");
-                        SharpTimerConPrint($"\u001b[33mPLUGIN VERSION DOES NOT MATCH LATEST GITHUB RELEASE");
-                        SharpTimerConPrint($"\u001b[33mCURRENT VERSION: {ModuleVersion}");
-                        SharpTimerConPrint($"\u001b[33mLATEST RELEASE VERSION: {latestVersion}");
-                        SharpTimerConPrint($"\u001b[33mPLEASE CONSIDER UPDATING SOON!");
-                    }
-                    SharpTimerConPrint($"\u001b[33m----------------------------------------------------");
-                }
-            }
-            catch (Exception ex)
-            {
-                SharpTimerError($"An error occurred in CheckForUpdate: {ex.Message}");
-            }
-        }
-
         private void ServerRecordADtimer()
         {
             if (isADTimerRunning) return;
