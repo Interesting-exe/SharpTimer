@@ -2,9 +2,9 @@
 
 namespace SharpTimerAPI.Events;
 
-public record StopTimerEvent(CCSPlayerController? player, bool isSr, bool isPb, int tier) : ISharpTimerPlayerEvent
+public record StopTimerEvent(CCSPlayerController? player, bool IsSr, bool IsPb, int Tier) : ISharpTimerPlayerEvent
 {
-    public bool IsSr { get; set; } = isSr;
-    public bool IsPb { get; set; } = isPb;
-    public int Tier { get; set; } = tier;
+    public bool IsSr { get; set; } = IsSr;
+    public bool IsPb { get; set; } = IsPb;
+    public int Tier { get; set; } = Tier;
 };
