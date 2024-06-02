@@ -18,6 +18,7 @@ using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Modules.Entities.Constants;
 using CounterStrikeSharp.API.Modules.Utils;
 using System.Text.Json;
+using SharpTimerAPI.Events;
 
 namespace SharpTimer
 {
@@ -534,6 +535,8 @@ namespace SharpTimer
                 {
                     _ = Task.Run(async () => await SpawnReplayBot());
                 }
+                
+                StEventSenderCapability.Get()?.TriggerEvent(new StopTimerEvent(player, newSR, beatPB, currentMapTier ?? 1));
             });
         }
 
