@@ -42,7 +42,7 @@ namespace SharpTimerAPITest
             else if (@event is StopTimerEvent)
             {
                 Console.WriteLine("Timer stopped");
-                manager.RestartTimer(player: @event.player!);
+                manager.RestartTimer(player: @event.Player!);
             }
             else
             {

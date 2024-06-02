@@ -5,5 +5,5 @@ using CounterStrikeSharp;
 
 public interface ISharpTimerPlayerEvent
 {
-    public CCSPlayerController? player { get;}
+    public CCSPlayerController? Player { get;}
 }
