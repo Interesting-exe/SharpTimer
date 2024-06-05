@@ -535,8 +535,16 @@ namespace SharpTimer
                 {
                     _ = Task.Run(async () => await SpawnReplayBot());
                 }
-                
-                StEventSenderCapability.Get()?.TriggerEvent(new StopTimerEvent(player, newSR, beatPB, currentMapTier ?? 1));
+
+                try
+                {
+                    StEventSenderCapability.Get()
+                        ?.TriggerEvent(new StopTimerEvent(player, newSR, beatPB, currentMapTier ?? 1));
+                }
+                catch (Exception e)
+                {
+                    SharpTimerError($"Couldn't trigger timer stop event {e.Message}");
+                }
             });
         }
 

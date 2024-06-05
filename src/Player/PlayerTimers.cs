@@ -26,7 +26,14 @@ namespace SharpTimer
         public void OnTimerStart(CCSPlayerController? player, int bonusX = 0)
         {
             if (!IsAllowedPlayer(player)) return;
-            StEventSenderCapability.Get()?.TriggerEvent(new StartTimerEvent(player));
+            try
+            {
+                StEventSenderCapability.Get()?.TriggerEvent(new StartTimerEvent(player));
+            }
+            catch (Exception e)
+            {
+                SharpTimerError($"Couldn't trigger timer start event {e.Message}");
+            }
 
             if (bonusX != 0)
             {
