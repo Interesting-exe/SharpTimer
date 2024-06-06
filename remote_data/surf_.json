@@ -258,7 +258,7 @@
     "surf_race": {
         "Tier": 1,
         "Type": "Staged"
-    }
+    },
     "surf_rebel_resistance": {
         "Tier": 1,
         "Type": "Linear"
